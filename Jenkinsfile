@@ -1,13 +1,19 @@
 pipeline {
     agent {
-        docker {
-            image 'node:14.17.6' 
-            args '-p 3000:3000' 
-        }
+        label 'docker' 
     }
     stages {
-        stage('Build') { 
-           steps {
+        stage('Docker node test') {
+            agent {
+                docker {
+                // Set both label and image
+                label 'docker'
+                image 'node:7-alpine'
+                args '--name docker-node' // list any args
+                }
+            }
+            steps {
+                // Steps run in node:7-alpine docker container on docker slave
                 sh 'node --version'
                 sh 'npm install'
                 sh 'npm run start'
