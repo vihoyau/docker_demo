@@ -1,30 +1,9 @@
 pipeline {
-    // agent {
-    //     label 'docker' 
-    // }
-    agent {
-        docker {
-        // Set both label and image
-        label 'docker'
-        image 'node:7-alpine'
-        args '--name docker-node' // list any args
-        }
-    }
+    agent { docker 'node:6.3' }
     stages {
-        agent {
-            docker {
-            // Set both label and image
-            label 'docker'
-            image 'node:7-alpine'
-            args '--name docker-node' // list any args
-            }
-        }
-        stage('Docker node test') {
+        stage('build') {
             steps {
-                // Steps run in node:7-alpine docker container on docker slave
-                sh 'node --version'
-                sh 'npm install'
-                sh 'npm run start'
+                sh 'npm --version'
             }
         }
     }
